@@ -1,0 +1,56 @@
+[root@desight1 ~]# cat go/src/login/scripts/Readme
+[root@desight1 scripts]# wmic -U Administrator%Simple.0 //192.168.11.183 "Select PathName,state,status from Win32_Service where name='NormalizeService' or name='UserConsoleService'"
+CLASS: Win32_Service
+Name|PathName|State|Status
+NormalizeService|"C:\BDNA\Data Platform\Bin\bms.BmsService.exe"|Running|OK
+UserConsoleService|"C:\BDNA\User Console\bin\BDNA.NormalizeBI.Service.exe"|Running|OK
+[root@desight1 scripts]#
+
+[root@desight1 scripts]# echo "NormalizeService|\"C:\BDNA\Data Platform\Bin\bms.BmsService.exe\"" |sed -rn "s/.*\"(.*).bms.BmsService.exe.*/\1/gp"
+C:\BDNA\Data Platform\Bin
+[root@desight1 scripts]#
+
+
+[root@desight1 ~]# winexe -U Administrator%Simple.0 //192.168.8.232 "ipconfig /all"
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : VMWC9110
+   Primary Dns Suffix  . . . . . . . : caceyvcenterdc.com
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : caceyvcenterdc.com
+
+
+[root@desight1 ~]# winexe -U Administrator%Simple.0 //192.168.11.184 'cmd /C type "C:\BDNA\Data Platform\Conf\DatabaseConnection.config"'
+<Configuration>
+  <DatabaseConnection Connection="Sql_192.168.11.183_MASTER">
+    <Connection Name="Oracle" Type="Oracle" Impersonate="False" User="" Password="">
+      <Property Name="HOST" Value="192.168.8.8" />
+      <Property Name="PORT" Value="1521" />
+
+
+[root@desight1 desight]# find /opt/omd/versions/1.4.0p23.cre/ -name python
+/opt/omd/versions/1.4.0p23.cre/bin/python
+/opt/omd/versions/1.4.0p23.cre/lib/python
+/opt/omd/versions/1.4.0p23.cre/share/doc/check_mk/livestatus/api/python
+/opt/omd/versions/1.4.0p23.cre/skel/local/lib/python
+[root@desight1 desight]# mv /usr/bin/python /usr/bin/pythonold
+[root@desight1 desight]# cp /opt/omd/versions/1.4.0p23.cre/bin/python /usr/bin/python
+[root@desight1 desight]# python -V
+Python 2.7.14
+
+go install:
+https://golang.org/doc/install
+https://golang.org/doc/code.html
+
+go get -u github.com/beego/bee
+
+[root@liumiaocn beego]# export GOPATH=/tmp/goprj/beego
+[root@liumiaocn beego]# go get github.com/astaxie/beego
+[root@liumiaocn beego]# go get github.com/beego/bee
+[root@liumiaocn beego]# export PATH=$PATH:/tmp/goprj/beego/bin
+
+go get github.com/lib/pq
+

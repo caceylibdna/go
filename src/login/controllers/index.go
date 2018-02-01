@@ -50,13 +50,20 @@ func (index *IndexController) Post() {
             user.NetName = inputs.Get("netName")
             user.Network = inputs.Get("network") 
             fmt.Println("discoverusername:", sess.Get("username"))
-            err := models.AddCreNetworkToTb(user)
-            fmt.Println("no error")
+            err := models.AddCredentials(user)
+            models.AddNetworks(user)
+            discoverdata :=  models.AddShifts(user)
             if err == nil {
+                index.Data["task"] = user.CreUsername + " " + user.CrePassword + " " + user.Network
+                index.Data["discoverdata"] = discoverdata
                 index.TplName = "tasks.tpl"
             } else {
                 index.TplName = "error.tpl"
             }
+        } else if user.LoadId == "TestDataOutput" {
+                index.Data["test"] = "caceytestoutput"
+                index.TplName = "dataoutput.tpl"
+
         } else {
             index.TplName = "error.tpl"
         }
